@@ -25,6 +25,8 @@ colors = [Red, Green, Blue, Yellow, Orange, Purple]
 exactMatches :: Code -> Code -> Int
 exactMatches xs ys = sum $ zipWith (\x y -> if x == y then 1 else 0) xs ys
 
+-- Nick's solution - exactMatches xs ys = length . (filter id) $ zipWith (==) xs ys
+
 -- Exercise 2 -----------------------------------------
 
 -- For each peg in xs, count how many times is occurs in ys
@@ -44,9 +46,15 @@ matches xs ys = sum $ zipWith getMatchCount guessCount actualCount
 
 -- Exercise 3 -----------------------------------------
 
+--getMove [Red, Blue, Yellow, Orange] [Red, Orange, Orange, Blue] == Move [Red, Orange, Orange, Blue] 1 2
+
 -- Construct a Move from a guess given the actual code
 getMove :: Code -> Code -> Move
-getMove = undefined
+getMove guess actual = Move guess exactMatchesCount nonExactMatchesCount
+  where
+    exactMatchesCount = exactMatches guess actual
+    nonExactMatchesCount = (matches guess actual) - exactMatchesCount -- a non exact match includes the exact matches so we remove them
+
 
 -- Exercise 4 -----------------------------------------
 
