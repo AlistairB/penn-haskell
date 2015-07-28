@@ -58,8 +58,13 @@ getMove guess actual = Move guess exactMatchesCount nonExactMatchesCount
 
 -- Exercise 4 -----------------------------------------
 
--- isConsistent :: Move -> Code -> Bool
--- isConsistent = undefined
+-- isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Yellow, Purple] == True
+-- isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Red, Purple] == False
+
+isConsistent :: Move -> Code -> Bool
+isConsistent Move guess exactCount nonExactCount actual = undefined
+  where
+    newExactCount = exactMatches 
 
 -- Exercise 5 -----------------------------------------
 
