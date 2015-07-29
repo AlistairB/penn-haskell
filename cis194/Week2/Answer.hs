@@ -62,19 +62,20 @@ getMove guess actual = Move guess exactMatchesCount nonExactMatchesCount
 -- isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Red, Purple] == False
 
 isConsistent :: Move -> Code -> Bool
-isConsistent Move guess exactCount nonExactCount actual = undefined
+isConsistent (Move guess exactCount nonExactCount) actual = exactCount == newExactCount && nonExactCount == newNonExactCount
   where
-    newExactCount = exactMatches 
+    newExactCount = exactMatches guess actual
+    newNonExactCount = (matches guess actual) - newExactCount
 
 -- Exercise 5 -----------------------------------------
 
--- filterCodes :: Move -> [Code] -> [Code]
--- filterCodes = undefined
+filterCodes :: Move -> [Code] -> [Code]
+filterCodes move codes = filter (isConsistent move) codes
 
 -- Exercise 6 -----------------------------------------
 
--- allCodes :: Int -> [Code]
--- allCodes = undefined
+allCodes :: Int -> [Code]
+allCodes length = undefined
 
 -- Exercise 7 -----------------------------------------
 
