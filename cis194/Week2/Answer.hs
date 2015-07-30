@@ -75,7 +75,10 @@ filterCodes move codes = filter (isConsistent move) codes
 -- Exercise 6 -----------------------------------------
 
 allCodes :: Int -> [Code]
-allCodes length = undefined
+allCodes length = process length [[]]
+  where
+    process 0 codes = codes
+    process n codes = process (n-1) $ (\x y -> x ++ [y]) <$> codes <*> colors
 
 -- Exercise 7 -----------------------------------------
 
