@@ -69,21 +69,32 @@ isConsistent (Move guess exactCount nonExactCount) actual = exactCount == newExa
 
 -- Exercise 5 -----------------------------------------
 
+--filterCodes :: [Code] -> Move -> [Code]
 filterCodes :: Move -> [Code] -> [Code]
 filterCodes move codes = filter (isConsistent move) codes
 
 -- Exercise 6 -----------------------------------------
 
 allCodes :: Int -> [Code]
-allCodes length = process length [[]]
+allCodes codeLength = process codeLength [[]]
   where
     process 0 codes = codes
     process n codes = process (n-1) $ (\x y -> x ++ [y]) <$> codes <*> colors
 
 -- Exercise 7 -----------------------------------------
 
--- solve :: Code -> [Move]
--- solve = undefined
+filterMultipleMoves :: [Move] -> [Code] -> [Code]
+filterMultipleMoves [] remainingCodes = remainingCodes
+filterMultipleMoves (x:xs) remainingCodes = filterMultipleMoves xs (filterCodes x remainingCodes)
+
+solve :: Code -> [Move]
+solve secretCode = process (allCodes 4) []
+  where
+    moveMatches (Move _ exactMatchesCount _) = exactMatchesCount == 4
+    process remainingCodes moveList = if moveMatches nextMove then updatedMoveList else process (filterMultipleMoves updatedMoveList remainingCodes) updatedMoveList
+      where
+        nextMove = getMove (head remainingCodes) secretCode
+        updatedMoveList = moveList ++ [nextMove]
 
 -- Bonus ----------------------------------------------
 
