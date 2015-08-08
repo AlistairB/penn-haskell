@@ -33,16 +33,23 @@ type State = String -> Int
 
 -- Exercise 1 -----------------------------------------
 
+-- let st’ = extend st "A" 5
+-- in st’ "A" == 5
+
 extend :: State -> String -> Int -> State
-extend = undefined
+extend state key value = f
+  where
+    f s
+      | s == key = value
+      | otherwise = state key
 
 empty :: State
-empty = undefined
+empty = \_ -> 0
 
 -- Exercise 2 -----------------------------------------
 
--- evalE :: State -> Expression -> Int
--- evalE = undefined
+evalE :: State -> Expression -> Int
+evalE = undefined
 --
 -- -- Exercise 3 -----------------------------------------
 --
