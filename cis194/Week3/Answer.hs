@@ -48,8 +48,26 @@ empty = \_ -> 0
 
 -- Exercise 2 -----------------------------------------
 
+-- evalE empty (Val 5) == 5
+--
+-- evalE empty (Op (Val 1) Eql (Val 2)) == 0
+
 evalE :: State -> Expression -> Int
-evalE = undefined
+evalE state (Var x) = state x
+evalE state (Val x) = x
+evalE state (Op expr1 bop expr2) = bopProcess bop (evalE state expr1) (evalE state expr2)
+  where
+    bopProcess bop int1 int2
+      | bop == Plus = int1 + int2
+      | bop == Minus = int1 - int2
+      | bop == Times = (fromIntegral $ int1 * int2)
+      | bop == Divide = (fromIntegral $ round $ (realToFrac int1) / (realToFrac int2))
+      | bop == Gt = if int1 > int2 then 1 else 0
+      | bop == Ge = if int1 >= int2 then 1 else 0
+      | bop == Lt = if int1 < int2 then 1 else 0
+      | bop == Le = if int1 <= int2 then 1 else 0
+      | bop == Eql = if int1 == int2 then 1 else 0
+
 --
 -- -- Exercise 3 -----------------------------------------
 --
